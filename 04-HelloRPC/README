@@ -1,0 +1,10 @@
+%%%%% Console na sdi-1 %%%%%
+sdi-1> make clean; make
+sdi-1> sudo ./server
+
+%%%%% Console na sdi-2 %%%%%
+sdi-2> ./client sdi-1 mensagem
+
+
+%%%%% MAIS DICAS E EXEMPLOS %%%%%
+https://docs.oracle.com/cd/E19683-01/816-1435/rpcgenpguide-21470/index.html

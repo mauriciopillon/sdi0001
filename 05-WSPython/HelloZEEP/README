@@ -1,0 +1,4 @@
+#####################################################
+#     Cliente/Servidor SayHello em python c/ zeep
+python3 serverSayHello.py
+python3 clientSayHello.py

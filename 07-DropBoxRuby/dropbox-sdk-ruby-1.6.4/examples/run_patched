@@ -1,0 +1,58 @@
+#! /usr/bin/env ruby
+
+# Used for internal testing.
+
+require 'rubygems'
+require 'json'
+require 'pathname'
+require 'net/https'
+require File.expand_path('../../lib/dropbox_sdk', __FILE__)
+
+def main
+    if ARGV.length < 2
+        $stderr.puts "Usage: ./run_patched <app-config.json> <program.rb> [args...]"
+        exit 1
+    end
+
+    config_file = ARGV.shift
+    program_file = ARGV.shift
+
+    unless program_file =~ /\.rb$/
+        $stderr.puts "Program file name must end with \".rb\".  You specified \"#{program_file}\"."
+        exit 1
+    end
+
+    # See if the config file exists, then load it as JSON.
+    unless File.exist?(config_file)
+        $stderr.puts "Couldn't find apps.json config file (\"#{config_file}\")"
+        exit 1
+    end
+    config = JSON.parse(IO.read(config_file))
+
+    # Load the key/secret/host fields.
+    ['key', 'secret'].each do |field|
+        if config[field] == nil || config[field].length == 0
+            $stderr.puts "\"#{config_file}\": missing or empty \"#{field}\" field."
+        end
+    end
+    app_key = config['key']
+    app_secret = config['secret']
+    host = config['host'] || config['server']  # 'server' is the old field name
+
+    # Patch hostnames in dropbox_sdk
+    if host != nil and host != 'dropbox.com'
+        Dropbox::API_SERVER.replace "api-#{host}"
+        Dropbox::API_CONTENT_SERVER.replace "api-content-#{host}"
+        Dropbox::WEB_SERVER.replace "meta-#{host}"
+    end
+
+    # Read in the program, search/replace the app key/secret, eval the resulting string.
+    code = IO.read(program_file)
+    code = code.gsub(/^APP_KEY = ''$/, "APP_KEY = '#{app_key}'")
+    code = code.gsub(/^APP_SECRET = ''$/, "APP_SECRET = '#{app_secret}'")
+    eval(code)
+end
+
+if __FILE__ == $0
+    main()
+end

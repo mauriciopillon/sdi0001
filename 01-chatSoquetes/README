@@ -1,0 +1,9 @@
+javac *.java
+
+Primeiro, lance o servidor:
+Terminal 1:
+   $ java MultiThreadChatServer
+
+Em outros terminais, lance os clientes:
+Termina 2-n:
+   $ java MultiThreadChatClient

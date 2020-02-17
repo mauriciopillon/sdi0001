@@ -1,0 +1,4 @@
+sudo apt-get install ruby
+sudo gem install dropbox-sdk
+sudo gem install dropbox_api
+sudo gem install 'paperclip-dropbox'

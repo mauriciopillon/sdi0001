@@ -1,0 +1,26 @@
+#####################################################
+# p/ INSTALL
+# dependência dos seguintes pacotes:
+ sudo pip3 install spyne
+ sudo pip3 install zeep
+
+
+#####################################################
+#     Teste de conexão c/ servidor externo
+python3 echo_services.py
+
+#####################################################
+#   Conexao com o servidor Hello de SDI em Java
+lance o servidor hello em Java
+python3 clienttoJavaSayHello.py
+
+#####################################################
+#     Cliente/Servidor SayHello em python c/ zeep
+cd HelloZEEP
+cat README
+
+#####################################################
+#     Cliente/Servidor SayHello em python c/ SOAP 
+cd HelloSOAP
+cat README
+

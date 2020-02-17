@@ -1,0 +1,135 @@
+####################################################################################
+#                     Gera Projeto MAVEN Hadoop c/ Makefile
+####################################################################################
+$ make
+
+####################################################################################
+# limpa Projeto
+$ make clean
+
+####################################################################################
+# limpa dependencias
+$ make cleanall
+
+
+
+
+
+
+
+
+####################################################################################
+################################ ATENCAO ###########################################
+#### Exception in thread "main" java.lang.UnsupportedClassVersionError: WordCount : Unsupported major.minor version 52.0
+# Se o ocorrer o erro indicado acima, verifique JAVA_HOME em :
+#####>>>>  /usr/local/hadoop-2.7.3/etc/hadoop/hadoop-env.sh
+#####>>>>  /home/<USER>/.bashrc 
+
+####################################################################################
+#         P/ compilar "a mao"
+####################################################################################
+## CONFIGURACAO DE VARIAVEIS DE AMBIENTE
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle/jre/
+export PATH=${JAVA_HOME}/bin:${PATH}
+export HADOOP_CLASSPATH=${JAVA_HOME}/lib/tools.jar
+export PATH=/usr/local/hadoop/bin:/usr/local/hadoop/sbin:$PATH
+
+
+##CRIA PROJETO sdi-hadoop
+mvn archetype:generate -DgroupId=com.wsudesc -DartifactId=sdi-hadoop -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+## Entra no diretorio do projeto
+cd sdi-hadoop/
+
+## Edite pom.xml
+INCLUA
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+
+INCLUA
+   <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-core</artifactId>
+      <version>1.2.1</version>
+  </dependency>
+ 
+
+## O arquivo pom.xml ficara assim:
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.wsudesc</groupId>
+  <artifactId>sdi-hadoop</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>sdi-hadoop</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-core</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+  </dependencies>
+</project>
+
+
+## Baixe as dependencias (jar)
+mvn dependency:get -Dartifact=org.apache.hadoop:hadoop-core:1.2.1
+
+## Copie as dependencias para o diretorio do projeto
+cp -r ~/.m2/repository/org .
+
+## Copie o exemplo SDITestDropBox
+cp WordCount.java src/main/java/com/wsudesc/.
+
+## Compile o projeto 
+mvn package
+
+## O diretorio target foi gerado com os arquivos compilados
+
+## Execute Hello p/ Testar Jar
+java -cp  target/sdi-dropbox-1.0-SNAPSHOT.jar com.wsudesc.App
+
+## Gera Jar WordCount-Hadoop
+javac -classpath ./org/apache/hadoop/hadoop-core/1.2.1/hadoop-core-1.2.1.jar WordCount.java
+jar cf wc.jar WordCount*.class
+
+
+## Cria arquivos de base
+cat > file01
+Hello World Bye World
+cat > file02
+Hello Hadoop Goodbye Hadoop
+
+#SE standalone
+  ## Cria INPUT (se for standalone)
+  mkdir input
+  ## Copia arquivos para input
+  cp file* input/.
+  ## Executa hadoop (MAPREDUCE)
+  hadoop jar wc.jar WordCount input output
+  ## Arquivo de resultado
+  cat output/part-r-00000
+
+#SE sistema com HDFS
+  ## Cria diretorio
+  hadoop fs -mkdir input_word
+  ## Copia arquivos para HDFS (Hadoop File System)
+  hadoop fs -put file* input_word
+  ## Executa hadoop (MAPREDUCE)
+  hadoop jar wc.jar WordCount input_word output_word
+  ## Arquivo de resultado
+  hadoop fs -cat output_word/part-r-00000

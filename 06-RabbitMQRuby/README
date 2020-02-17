@@ -1,0 +1,5 @@
+http://www.rabbitmq.com/getstarted.html
+sudo rabbitmqctl list_queues
+ruby send.rb
+ruby recv.rb
+

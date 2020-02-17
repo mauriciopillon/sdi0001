@@ -1,0 +1,20 @@
+## remova os hosts conhecidos
+$ rm -f ~/.ssh/known_hosts
+
+## descubra o nome que voce deu para a maquina com:
+$ hostname
+<meu-nome-host>
+
+## descubra o IP do teu host
+$ ifconfig | grep "inet addr"
+          inet addr:xxx.xxx.xxx.xxx  Bcast:192.168.200.255  Mask:255.255.255.0
+          inet addr:127.0.0.1  Mask:255.0.0.0
+## anote o IP diferente do 127.0.0.1
+
+## inclua o nome do host no arquivo de hosts
+vi /etc/hosts
+
+## acrescente o IP e o nome da maquina
+xxx.xxx.xxx.xxx  <meu-nome-host>
+
+reboothdfs.sh

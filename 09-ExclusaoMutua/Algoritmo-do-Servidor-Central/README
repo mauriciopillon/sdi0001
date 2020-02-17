@@ -1,0 +1,18 @@
+
+make clean; make
+
+########## TESTE 1 ###########
+#LANCAR servidor c/ exclusao mutua no terminal 1:
+./central_server 2000
+
+# LANCAR os N clientes no terminal 2:
+ ./client localhost 2000
+
+
+########## TESTE 1 ###########
+# P/ lançar varias vezes
+#LANCAR servidor c/ exclusao mutua no terminal 1:
+for i in `seq 1 10` ; do echo $i ; ./central_server 2000 > log-server$i; done
+
+#LANCAR clientes no terminal 2:
+for i in `seq 1 10` ; do echo $i ; ./client localhost 2000 > log-client$i ; done

@@ -1,0 +1,98 @@
+#######################################################################################################
+#                                              DICAS 
+# Prof.: Mauricio A. Pillon
+# E-mail: Mauricio.Pillon@udesc.br
+#######################################################################################################
+# Para entender as fases de compilação e construção, analise o Makefile
+# Edite diretamente o arquivo SDITestDropBox.java na raiz do diretório
+# Escolha a forma de compilação: usando make (1) ou "a mão" (2)
+
+
+#######################################################################################################
+#                                        (1) Usando o make
+#######################################################################################################
+# p/ compilar o projeto mvn
+$ make
+
+# p/ limpar o projeto mvn
+$ make clean
+
+# p/ limpar as dependências do projeto mvn
+$ make cleanall
+
+
+
+#######################################################################################################
+#                          (2) Compilando "a mao" c/ gerente de projetos Maven
+#######################################################################################################
+##CRIA PROJETO sdi-dropbox
+mvn archetype:generate -DgroupId=com.wsudesc -DartifactId=sdi-dropbox -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+## Entra no diretorio do projeto
+cd sdi-dropbox
+
+## Edite pom.xml
+INCLUA
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+
+INCLUA
+    <dependency>
+      <groupId>com.dropbox.core</groupId>
+      <artifactId>dropbox-core-sdk</artifactId>
+      <version>2.1.1</version>
+    </dependency>
+
+## O arquivo pom.xml ficara assim:
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.wsudesc</groupId>
+  <artifactId>sdi-dropbox</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>sdi-dropbox</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+  <dependencies>
+     <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.dropbox.core</groupId>
+      <artifactId>dropbox-core-sdk</artifactId>
+      <version>2.1.1</version>
+    </dependency>
+  </dependencies>
+</project>
+
+
+
+## Baixe as dependencias (jar)
+mvn dependency:get -Dartifact=com.dropbox.core:dropbox-core-sdk:2.1.1
+
+## Copie as dependencias para o diretorio do projeto
+cp -r ~/.m2/repository/com .
+
+## Copie o exemplo SDITestDropBox
+cp ../SDITestDropBox.java src/main/java/com/wsudesc/SDITestDropBox.java
+
+## Compile o projeto 
+mvn package
+
+## O diretorio target foi gerado com os arquivos compilados
+
+## Execute Hello p/ Testar Jar
+java -cp  target/sdi-dropbox-1.0-SNAPSHOT.jar com.wsudesc.App
+
+## Execute SDITestDropBox
+java -cp  target/sdi-dropbox-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar com.wsudesc.app.SDITestDropBox
+

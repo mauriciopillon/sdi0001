@@ -1,0 +1,13 @@
+2018-06-04:
+  - WS Python c/ SOAP e zeep resolvido.
+  - Snapshot SDILab2018v01_20180604
+
+2018-06-03:
+  - VMs SDI (sdi01 e sdi02) c/ imagem SDILab2018
+  - Snapshot SDILab2018
+  - 07-DropboxRuby com problemas
+    (https://www.dropbox.com/developers-v1/core/sdks/ruby)
+  - Web Service c/ problemas em Python e Ruby
+    (https://www.tutorialspoint.com/ruby/ruby_web_services.htm)
+    (https://devblast.com/b/introduction-to-web-apis-with-ruby)
+    (https://www.ibm.com/developerworks/library/os-ws-rubyrails/index.html)

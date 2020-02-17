@@ -1,0 +1,6 @@
+CODIGO VERSAO > 1.8
+javac *.java
+// Nao e necessario se usar Create.RmiResgirtu
+//rmiregistry 9999&
+java HelloServer
+java HelloClient localhost

@@ -1,0 +1,45 @@
+EXEMPLOS DE APLICAÇÕES USANDO SOCKETS
+=====================================
+
+Os exemplos do livro do Kurose são aplicações cliente-servidor onde o
+cliente lê uma linha do teclado e a envia para o servidor. Este converte
+a string recebida em maiúsculas e retorna o resultado da conversão para
+o cliente, que exibe a string na tela.
+
+Existem versões usando sockets TCP (TCPClient.java e TCPServer.java) e UDP
+(UDPClient.java e UDPServer.java). Em ambos os casos, o código pressupõe
+que cliente e servidor estejam executando na mesma máquina.  A versão TCP
+usa a porta 6789, e a versão UDP usa a porta 9876.
+
+
+COMPILANDO E EXECUTANDO OS PROGRAMAS
+====================================
+
+O programa `TCPServer.java' pode ser compilado com
+
+  $ javac TCPServer.j
+
+
+
+
+
+
+
+
+
+:q!
+:q!
+ava
+
+e executado com
+
+  $ java TCPServer
+
+(o $ é o prompt do shell, que pode variar entre sistemas)
+
+Para que as aplicações funcionem corretamente, é necessário executar o
+servidor antes de executar o cliente.
+
+## P/ criar um arquivo texto aletório com o tamanho desejado:
+base64 /dev/urandom | head -c 1K > /tmp/file1K
+

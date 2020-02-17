@@ -1,0 +1,8 @@
+http://www.rabbitmq.com/getstarted.html
+sudo rabbitmqctl list_queues
+
+javac -cp $CP Recv.java
+javac -cp $CP Send.java
+
+java -cp $CP Send
+java -cp $CP Recv

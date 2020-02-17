@@ -1,0 +1,12 @@
+Teste se a biblioteca esta ok
+python3 dbversion.py
+
+
+Crie o diretorio /home/<user>/Downloads/
+Copie (ou crie) alguns arquivos para este diretório
+
+Execute:
+   python3 app.py
+
+Ele criará um arquivo Downloads no Dropbox (sdiudesc) e copiará os arquivos da sua máquina para o db.
+
